@@ -6,12 +6,12 @@
 
 #%% Leer del input
 input = ""
-with open('test.txt', 'r') as f:
+with open('input-2.txt', 'r') as f:
     input = f.read().splitlines()
     # Opcional: quitar espacios en blanco
     for i in range(len(input)):
         input[i] = input[i].replace(' ', '')
-print(input) # lista de partidas jugadas, formato AY, BX, CZ, etc. Correcto
+# print(input) # lista de partidas jugadas, formato AY, BX, CZ, etc. Correcto
 #%% Parte 1 - función que determina ganador, empate o perdida y retorna puntos
 puntos = [] 
 # Puntos según resultado
@@ -63,6 +63,6 @@ for i in range(len(puntos)):
     puntos_res = puntos_resultado.get(puntos[i])
     puntos[i] = puntos_forma + puntos_res # 2+6 = 8, 1+0 = 1, 3+3 = 6 -> 15
     # print(puntos[i], puntos_forma, puntos_res)    # cuadra todo
-print(puntos)       # [8, 1, 6]
-print(sum(puntos))  # 15
+# print(puntos)     # test: [8, 1, 6]
+print(sum(puntos))  # test: 15
 # Puntos según elección
