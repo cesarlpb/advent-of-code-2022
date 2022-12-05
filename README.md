@@ -1,2 +1,6 @@
-# advent-of-code-2022
+# Advent of Code 2022
+
 Repositorio para resolver y explicar los problemas planteados en adventofcode.com/2022
+
+- **Day 1:** [Calorie Counting](/day-1/). [Enunciado original (en inglés)](https://adventofcode.com/2022/day/1)
+- Day 2: 
