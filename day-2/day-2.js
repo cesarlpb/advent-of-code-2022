@@ -73,4 +73,5 @@ fs.readFile('input-2.txt', 'utf8', (err, data) => {
   });
 
 // TODO: El número que calcula no es correcto, revisar.
+  // Primera parte debe ser 10624
   // Calcula un 2500 en vez de 14060 (en el caso 2)
