@@ -1,3 +1,5 @@
+# Day 3 - https://adventofcode.com/2022/day/3
+
 # X Leer txt
 # X Separar en mitades
 # X Iterar ambas mitades para determinar qué caracter se repite
