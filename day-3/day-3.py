@@ -1,7 +1,7 @@
 # X Leer txt
 # X Separar en mitades
-# Iterar ambas mitades para determinar qué caracter se repite
-    # print -> el caracter que se repite
+# X Iterar ambas mitades para determinar qué caracter se repite
+    # X print -> el caracter que se repite
 # Calcular prioridad
 # Calcular sumas de prioridades
 
@@ -46,8 +46,51 @@ for i in range(len(datos_test)):
     izquierda, derecha = separar_mitades(datos_test[i])
     c_izquierda, c_derecha = buscar_coincidencias(izquierda, derecha)
     concidencias_test.append((c_izquierda, c_derecha))
-
-for i in range(len(concidencias_test)):
-    print(f"\n{i}\n{concidencias_test[i][0]}\n{concidencias_test[i][1]}")
+# Descomentar para comprobar coincidencias
+# for i in range(len(concidencias_test)):
+#     print(f"\n{i}\n{concidencias_test[i][0]}\n{concidencias_test[i][1]}")
 # Verificamos que las coincidencias son únicas
+#%% Definimos una función para quedarnos con la primera coincidencia
+def primera_coincidencia(izquierda, derecha):
+    for char in izquierda:
+        if char in derecha:
+            return char
+    return None
+datos_test = leer_txt('test-3.txt')
+for lista in datos_test:
+    izquierda, derecha = separar_mitades(lista)
+    print(primera_coincidencia(izquierda, derecha))
+# Correcto en datos de test
+#%% Cálculo de prioridades
+a_z = 'abcdefghijklmnopqrstuvwxyz'
+A_Z = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+def calcular_prioridad(char):
+    if char in a_z:
+        return a_z.index(char)+1
+    elif char in A_Z:
+        return A_Z.index(char)+27
+    else:
+        return None
+# Test calcular_prioridad
+# 16 (p), 38 (L), 42 (P), 22 (v), 20 (t) y 19 (s); 
+# la suma de estos es 157
+datos_test = leer_txt('test-3.txt')
+prioridades = []
+for lista in datos_test:
+    izquierda, derecha = separar_mitades(lista)
+    char = primera_coincidencia(izquierda, derecha)
+    prioridades.append(calcular_prioridad(char))
+print(prioridades)      # [16, 38, 42, 22, 20, 19]
+print(sum(prioridades)) # 157
+# Correcto en datos de test
+#%% Cálculo de suma de prioridades para el input completo
+datos_input = leer_txt('input-3.txt')
+prioridades = []
+for lista in datos_input:
+    izquierda, derecha = separar_mitades(lista)
+    char = primera_coincidencia(izquierda, derecha)
+    prioridades.append(calcular_prioridad(char))
+# print(prioridades)      
+print(sum(prioridades)) 
 # %%
