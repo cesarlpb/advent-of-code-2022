@@ -93,12 +93,49 @@ for lista in datos_input:
     prioridades.append(calcular_prioridad(char))
 # print(prioridades)      
 print(sum(prioridades)) # 7863
-#%% Parte 2
-# Agrupar por grupos de 3
+#%% --- Parte 2 ---
+# X Agrupar por grupos de 3 -> iterando de 3 en 3
 # Buscar coincidencias entre grupos de 3 -> única letra
+    # Buscamos el string mas corto del grupo de 3
+    # Iteramos sobre el string más corto buscando coincidencia en el segundo más corto y SI hay coincidencia, la guardamos buscamos en el tercero
+        ## Seguimos pasando chars mientras no haya una coincidencia triple
 # Calcular prioridad de dicha letra para el grupo -> Hay 100 grupos de 3
 # Calcular suma de prioridades
-
+def buscar_coincidencias_triples(lista_de_datos, indice):
+    grupo = [lista_de_datos[indice], lista_de_datos[indice+1], lista_de_datos[indice+2]]
+    # Buscamos el string más corto
+    grupo = sorted(grupo, key=len) # más corto a más largo
+    for char in grupo[0]:
+        if char in grupo[1]:
+            if char in grupo[2]:
+                return char
+    return None
 #%% Test
-# r y Z -> 18 y 52
+datos_test = leer_txt('test-3.txt')
+indice = 0
+chars = []
+while indice < len(datos_test):
+    chars.append(buscar_coincidencias_triples(datos_test, indice))
+    indice += 3
+# r y Z -> 18 y 52 -> Correcto
+print(chars)
+#%% Cálculo de prioridades y suma
 # 18 + 52 = 70
+prioridades = []
+for char in chars:
+    prioridades.append(calcular_prioridad(char))
+print(sum(prioridades)) # 70
+#%% Caso real con el input
+datos_input = leer_txt('input-3.txt')
+indice = 0
+chars = []
+prioridades = []
+
+while indice < len(datos_input):
+    chars.append(buscar_coincidencias_triples(datos_input, indice))
+    indice += 3
+
+for char in chars:
+    prioridades.append(calcular_prioridad(char))
+print(sum(prioridades)) # 
+# %%
