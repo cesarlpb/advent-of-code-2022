@@ -92,5 +92,13 @@ for lista in datos_input:
     char = primera_coincidencia(izquierda, derecha)
     prioridades.append(calcular_prioridad(char))
 # print(prioridades)      
-print(sum(prioridades)) 
-# %%
+print(sum(prioridades)) # 7863
+#%% Parte 2
+# Agrupar por grupos de 3
+# Buscar coincidencias entre grupos de 3 -> única letra
+# Calcular prioridad de dicha letra para el grupo -> Hay 100 grupos de 3
+# Calcular suma de prioridades
+
+#%% Test
+# r y Z -> 18 y 52
+# 18 + 52 = 70
