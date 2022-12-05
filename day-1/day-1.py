@@ -2,9 +2,9 @@
 
 # X Leer input de input-1.txt
 # X Leer los grupos de números separados por \n\n
-# Cada grupo es un "elfo" que tiene que sumar los números
-# Debemos registrar la suma de cada elfo -> "calorías" -> int
-# Hallamos la suma máxima de calorías -> int
+# X Cada grupo es un "elfo" que tiene que sumar los números
+# X Debemos registrar la suma de cada elfo -> "calorías" -> int
+# X Hallamos la suma máxima de calorías -> int
 
 #%% Parte 1: leer input
 input = ""
