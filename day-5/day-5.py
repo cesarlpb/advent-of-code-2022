@@ -25,11 +25,14 @@ def leer_txt_modificado(archivo):
  # X segunda parte: pasos -> otra fn -> lista de listas
 cajas, pasos, num_cols = leer_txt_modificado('test-5.txt')
 print("cajas:\n", cajas)
-pasos_lista = []
-for paso in pasos:
-    temp = paso.replace("move ", "").replace(" from ", " ").replace(" to ", " ").split(" ")
-    temp = [int(i) for i in temp]
-    pasos_lista.append(temp)
+def calc_pasos_lista(pasos):
+    pasos_lista = []
+    for paso in pasos:
+        temp = paso.replace("move ", "").replace(" from ", " ").replace(" to ", " ").split(" ")
+        temp = [int(i) for i in temp]
+        pasos_lista.append(temp)
+    return pasos_lista
+pasos_lista = calc_pasos_lista(pasos)
 print("pasos:\n", pasos_lista)
 print("cols:", num_cols)
 #%% Diccionario -> cada value es una lista de chars, cada char es una caja
@@ -45,11 +48,11 @@ print("cols:", num_cols)
     # 1         1 
     # 5         2
     # 9         3
-def crear_dict(cajas, num_cols):
+def crear_dict(cajas, num_cols_input):
     my_dict = {}
     dict_ij = {}
     
-    for i in range(num_cols):
+    for i in range(0,num_cols_input+1):
         dict_ij[1 + 4 * (i)] = i+1
         my_dict[i+1] = ""
     print(dict_ij)
@@ -64,12 +67,40 @@ def crear_dict(cajas, num_cols):
             j += 4
         i += 1
     return my_dict
-my_dict = crear_dict(cajas, num_cols)
-print(my_dict)
+
+pos_iniciales = crear_dict(cajas, num_cols)
+print(pos_iniciales)
 #%% Fn para mover cajas
     # input: pasos_lista
     # realizar los movimientos de cajas
     # llegar al resultado final
 
+    # dict = { 1: "NZ", 2: "DCM", 3: "P"}
+    # dict = { 1: "NZ", 2: "CM", 3: "P"}
+    # dict = { 1: "DNZ", 2: "CM", 3: "P"}
+    # ...
+def mover_cajas(pasos_lista_input, my_dict):
+    for paso in pasos_lista_input:
+        num_cajas, desde, hasta = paso
+        cajas_a_mover = my_dict[desde][:num_cajas]
+        my_dict[desde] = my_dict[desde][num_cajas:]
+        my_dict[hasta] = cajas_a_mover[::-1] + my_dict[hasta]
+        print(my_dict)
+    return my_dict
+
+pos_finales = mover_cajas(pasos_lista, pos_iniciales) # correcto -> CMZ
 #%% Entregar las cajas de arriba de cada columna
     # los primeros caracteres de cada value del dict
+# for key, value in pos_finales.items():
+#     print(key, value)
+# CMZ -> TODO: hay que evitar que el caso de test nos genere 4 keys
+#%% Realizamos la ordenación con el input
+cajas_input, pasos_input, num_cols_input = leer_txt_modificado('input-5.txt')
+pos_iniciales_input = crear_dict(cajas_input, num_cols_input)
+pasos_input_lista = calc_pasos_lista(pasos_input)
+pos_finales_input = mover_cajas(pasos_input_lista, pos_iniciales_input)
+cajas_superiores = ""
+for key, value in pos_finales_input.items():
+    cajas_superiores += value[0]
+print(cajas_superiores)
+# %%
