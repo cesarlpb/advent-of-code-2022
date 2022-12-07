@@ -15,7 +15,7 @@ def leer_txt_modificado(archivo):
     cols_idx = 0
     while idx < len(datos):
         if datos[idx].replace(" ", "").isdigit():
-            cols_idx = idx
+            cols_idx = len(datos[idx].replace(" ", ""))
             break
         idx += 1
     return (datos[:cols_idx], datos[cols_idx+2:], cols_idx)
@@ -52,9 +52,11 @@ def crear_dict(cajas, num_cols_input):
     my_dict = {}
     dict_ij = {}
     
-    for i in range(0,num_cols_input+1):
-        dict_ij[1 + 4 * (i)] = i+1
+    for i in range(0,num_cols_input): 
+
+        dict_ij[1 + 4 * i] = i+1
         my_dict[i+1] = ""
+        print(i+1, 1 + 4 * i)
     print(dict_ij)
     i = 0
     while i < len(cajas):
@@ -85,22 +87,22 @@ def mover_cajas(pasos_lista_input, my_dict):
         cajas_a_mover = my_dict[desde][:num_cajas]
         my_dict[desde] = my_dict[desde][num_cajas:]
         my_dict[hasta] = cajas_a_mover[::-1] + my_dict[hasta]
-        print(my_dict)
+        # print(my_dict)
     return my_dict
 
 pos_finales = mover_cajas(pasos_lista, pos_iniciales) # correcto -> CMZ
 #%% Entregar las cajas de arriba de cada columna
     # los primeros caracteres de cada value del dict
-# for key, value in pos_finales.items():
-#     print(key, value)
+for key, value in pos_finales.items():
+    print(value[0], end="")
 # CMZ -> TODO: hay que evitar que el caso de test nos genere 4 keys
 #%% Realizamos la ordenación con el input
 cajas_input, pasos_input, num_cols_input = leer_txt_modificado('input-5.txt')
-pos_iniciales_input = crear_dict(cajas_input, num_cols_input)
+pos_iniciales_input = crear_dict(cajas_input, 9)
 pasos_input_lista = calc_pasos_lista(pasos_input)
 pos_finales_input = mover_cajas(pasos_input_lista, pos_iniciales_input)
 cajas_superiores = ""
 for key, value in pos_finales_input.items():
     cajas_superiores += value[0]
-print(cajas_superiores)
+print(cajas_superiores) #-> SHQWSRBDL # ha cambiado la salida a RZTGHGFDG
 # %%
