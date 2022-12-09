@@ -33,4 +33,28 @@ for linea in datos_test:
 for linea in datos_input:
     print(buscar_coincidencias(linea))
 # Correcto -> 1109
+# %% Parte 2
+# Ahora hay que buscar coincidencias de 14 chars no repetidos
+def buscar_coincidencias(linea, num_chars=14):
+    idx = num_chars
+    my_set = set()
+    while len(my_set) < num_chars:
+        my_str = linea[idx-num_chars:idx]
+        my_set.clear()
+        for char in my_str:
+            my_set.add(char)
+        idx += 1
+    return idx-1
+buscar_coincidencias(datos_test[0]) # 19
+
+#%% Bucle para iterar todas las líneas -> 14 chars
+for linea in datos_test:
+    print(buscar_coincidencias(linea))
+# Correcto -> 19 23 23 29 26
+
+#%% Bucle para iterar todas las líneas -> 14 chars
+for linea in datos_input:
+    print(buscar_coincidencias(linea))
+# Correcto -> 3965
+
 # %%
