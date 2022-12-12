@@ -104,4 +104,34 @@ print("Total visibles test:", calc_borde(len(datos_test)) + calc_interiores(dato
 #%% Total árboles visibles en input
 print("Total visibles input:", calc_borde(len(datos_input)) + calc_interiores(datos_input)) # más de 392
 
+#%% Parte 2
+#%% Modificamos es_arbol_visible para calcular la puntuación de cada árbol
+    # Puntuación := multiplicación de las cuatro distancias hasta árbol igual o más alto que el árbol analizado
+        # Distancia -> cuanta hasta donde el árbol es igual o más alto
+def calc_puntuacion_arbol(fila, columna, datos):
+    d_izq, d_der, d_arriba, d_abajo = 0, 0, 0, 0
+    arbol = datos[fila][columna]
+    # Izquierda y derecha
+    arboles_fila = datos[fila]
+    col = 0
+    while col < len(arboles_fila) and (not d_izq or not d_der):
+        if col < columna and arboles_fila[col] >= arbol:
+            d_izq = columna - col
+        elif col > columna and arboles_fila[col] >= arbol:
+            d_der = col - columna
+            break
+        col += 1
+    # Arriba y abajo
+    fil = 0
+    while fil < len(datos) and (not d_arriba or not d_abajo):
+        if fil < fila and datos[fil][columna] >= arbol:
+            d_arriba = fila - fil
+        elif fil > fila and datos[fil][columna] >= arbol:
+            d_abajo = fil - fila
+            break
+        fil += 1
+    return d_izq * d_der * d_arriba * d_abajo
+
+print("1, 2:", calc_puntuacion_arbol(1, 2, datos_test)) # 1 * 1 * 2 * 2 = 4
+print("3, 2:", calc_puntuacion_arbol(3, 2, datos_test)) # 2 * 2 * 1 * 2 = 8
 # %%
