@@ -104,10 +104,11 @@ print("Total visibles test:", calc_borde(len(datos_test)) + calc_interiores(dato
 #%% Total árboles visibles en input
 print("Total visibles input:", calc_borde(len(datos_input)) + calc_interiores(datos_input)) # más de 392
 
-#%% Parte 2
+# Parte 2
 #%% Modificamos es_arbol_visible para calcular la puntuación de cada árbol
     # Puntuación := multiplicación de las cuatro distancias hasta árbol igual o más alto que el árbol analizado
         # Distancia -> cuanta hasta donde el árbol es igual o más alto
+datos_test = ['30373', '25512', '65332', '33549', '35390']
 def calc_puntuacion_arbol(fila, columna, datos):
     d_izq, d_der, d_arriba, d_abajo = 0, 0, 0, 0
     arbol = datos[fila][columna]
@@ -121,6 +122,12 @@ def calc_puntuacion_arbol(fila, columna, datos):
             d_der = col - columna
             break
         col += 1
+    # Si después del bucle d_izq o d_der son 0, no hay árboles más altos a la izquierda o derecha
+    # Idea: cambiar estos IFs por MAX entre 0 y la distancia calculada
+    if d_izq == 0:
+        d_izq = columna
+    if d_der == 0:
+        d_der = len(arboles_fila) - columna - 1
     # Arriba y abajo
     fil = 0
     while fil < len(datos) and (not d_arriba or not d_abajo):
@@ -130,8 +137,26 @@ def calc_puntuacion_arbol(fila, columna, datos):
             d_abajo = fil - fila
             break
         fil += 1
+    # Si después del bucle d_arriba o d_abajo son 0, no hay árboles más altos arriba o abajo
+    # Idea: cambiar estos IFs por MAX entre 0 y la distancia calculada
+    if d_arriba == 0:
+        d_arriba = fila
+    if d_abajo == 0:
+        d_abajo = len(datos) - fila - 1
     return d_izq * d_der * d_arriba * d_abajo
 
 print("1, 2:", calc_puntuacion_arbol(1, 2, datos_test)) # 1 * 1 * 2 * 2 = 4
 print("3, 2:", calc_puntuacion_arbol(3, 2, datos_test)) # 2 * 2 * 1 * 2 = 8
+#%% Calculamos puntuación total para todos los árboles y guardamos el dato más alto
+def calc_puntuacion_maxima(datos):
+    arbol_mas_alto = (0, 0, 0) # (fila, columna, puntuación)
+    for fil in range(len(datos)):
+        for col in range(len(datos[0])):
+            puntuacion = calc_puntuacion_arbol(fil, col, datos)
+            if puntuacion > arbol_mas_alto[2]:
+                arbol_mas_alto = (fil, col, puntuacion)
+    return arbol_mas_alto
+print("Árbol más alto en test:", calc_puntuacion_maxima(datos_test)) # (3, 2, 8) -> correcto
+#%% Iteramos en input
+print("Árbol más alto en input:", calc_puntuacion_maxima(datos_input)) # 
 # %%
